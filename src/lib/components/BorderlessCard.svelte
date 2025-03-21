@@ -1,14 +1,16 @@
-<script>
-	export let card;
+<script lang="ts">
+	import type { Card } from "$lib";
+
+	export let card: Card;
 </script>
 
 <div class="card-frame">
 	<div class="borderless-card">
-		<div class="header-pill">{card.name}</div>
-		<img src={card.photo_url} alt={card.name} class="card-image" />
+		<div class="header-pill">{card.subject.handle}</div>
+		<img src={card.photoUrl} alt={card.subject.handle} class="card-image" />
 		<div class="footer-text">
 			<span>Shot by</span>
-			<div class="photographer-name">{card.photographer}</div>
+			<div class="photographer-name">{card.photographer.handle}</div>
 		</div>
 	</div>
 </div>
@@ -17,7 +19,6 @@
 	.card-frame {
 		width: 20rem;
 		aspect-ratio: 5/7;
-		background: linear-gradient(45deg, #1a1a1a, #333);
 		border-radius: 1rem;
 		display: flex;
 		flex-direction: column;
