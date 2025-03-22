@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { Card } from "$lib";
+  import type { CardData } from "$lib";
   import TemplateCard from "$lib/components/TemplateCard.svelte";
   import { AtpAgent } from "@atproto/api";
   import type { ProfileViewBasic } from "@atproto/api/dist/client/types/app/bsky/actor/defs";
 
-  let card: Card = $state({
+  let card: CardData = $state({
     $type: "app.skyshot.card",
     photoUrl: "https://picsum.photos/id/64/300/400",
     metadata: {

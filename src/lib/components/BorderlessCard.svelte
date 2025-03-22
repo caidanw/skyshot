@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Card } from "$lib";
+	import type { CardData } from "$lib";
 
-	export let card: Card;
+	export let card: CardData;
 </script>
 
 <div class="card-frame">

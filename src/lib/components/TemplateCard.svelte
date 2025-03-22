@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Card } from "$lib";
+	import type { CardData } from "$lib";
 
-	const { card }: { card: Card } = $props();
+	const { card }: { card: CardData } = $props();
 </script>
 
 <div class="card-frame">
