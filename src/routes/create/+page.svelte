@@ -11,7 +11,7 @@
 
   let card: CardData = $state({
     $type: "app.skyshot.card",
-    photoUrl: "https://picsum.photos/id/64/300/400",
+    photoUrl: "https://placehold.co/800?text=placeholder\\nimage&font=roboto",
     metadata: {
       title: "",
       caption: "",
@@ -21,10 +21,19 @@
     subject: {
       did: "",
       handle: "",
+      displayName: "",
+      avatar: "",
+      labels: [],
+      createdAt: "",
     },
     photographer: {
-      did: "",
-      handle: "",
+      did: "did:plc:2vjaeco3bs24mv5kdrjlzrbr",
+      handle: "caidan.dev",
+      displayName: "Caidan",
+      avatar:
+        "https://cdn.bsky.app/img/avatar/plain/did:plc:2vjaeco3bs24mv5kdrjlzrbr/bafkreiejz5ftbsjcpdn6mdfbm6divk4ofjkfv2wr2gqwtvnf7p2fnjnaoq@jpeg",
+      labels: [],
+      createdAt: "2023-06-30T02:42:56.424Z",
     },
   });
 
@@ -39,16 +48,20 @@
   let actors = $state<ProfileViewBasic[]>([]);
 
   function findBskyUser() {
-    // Handle finding Bsky user logic here
-    console.log("Finding Bsky user...");
+    if (!card.subject?.handle) return;
 
-    agent.searchActorsTypeahead({ q: card.subject.handle }).then((response) => {
-      console.log("Found Bsky users:");
-      response.data.actors.forEach((actor) => {
-        console.log(actor);
+    agent
+      .searchActorsTypeahead({ q: card.subject.handle })
+      .then((response) => {
+        console.log("Found Bsky users:");
+        response.data.actors.forEach((actor) => {
+          console.log(actor);
+        });
+        actors = response.data.actors;
+      })
+      .catch((error) => {
+        console.error("Failed to find Bsky users:", error);
       });
-      actors = response.data.actors;
-    });
   }
 
   // card.subject.handle = "a";
@@ -86,6 +99,9 @@
             placeholder="Enter subject handle"
             bind:value={card.subject.handle}
             oninput={findBskyUser}
+            onblur={() => {
+              actors = [];
+            }}
           />
           {#if actors.length > 0}
             <Card.Root class="absolute overflow-scroll max-h-60 w-full">

@@ -1,15 +1,20 @@
 <script lang="ts">
 	import type { CardData } from "$lib";
 
-	const { card }: { card: CardData } = $props();
+	const { card }: { card: Partial<CardData> } = $props();
+	const { subject, photographer } = card;
 </script>
 
 <div class="card-frame">
-	<div class="subject-name">@{card.subject.handle}</div>
-	<img src={card.photoUrl} alt={card.metadata.title} class="card-image" />
-	<div class="footer">
-		<span>Shot by</span>
-		<div class="photographer-name">{card.photographer.handle}</div>
+	<div class="card-header">
+		<div class="">{subject?.displayName}</div>
+		<div class="">@{subject?.handle}</div>
+	</div>
+	<img src={card.photoUrl} alt={card.metadata?.title} class="card-image" />
+	<div class="footer p-2">
+		<div class="text-sm">Shot by</div>
+		<div class="font-bold text-lg">{photographer?.displayName}</div>
+		<div class="text-sm">@{photographer?.handle}</div>
 	</div>
 </div>
 
@@ -23,7 +28,7 @@
 		position: relative;
 	}
 
-	.subject-name {
+	.card-header {
 		position: absolute;
 		top: 1rem;
 		left: 50%;
@@ -44,7 +49,7 @@
 		border-radius: 1rem;
 	}
 
-	.photographer-name {
+	.photographer-handle {
 		font-size: 1.2em;
 		font-weight: bold;
 	}
@@ -54,18 +59,17 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		padding: 1rem;
 		background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-		color: white;
+		/* color: white; */
 		text-align: end;
 	}
 
-	.footer span {
-		font-size: 0.8em;
-		text-transform: uppercase;
-		letter-spacing: 1px;
-		opacity: 0.8;
-	}
+	/* .footer span { */
+	/* 	font-size: 0.8em; */
+	/* 	text-transform: uppercase; */
+	/* 	letter-spacing: 1px; */
+	/* 	opacity: 0.8; */
+	/* } */
 
 	.photographer-name {
 		font-size: 1.2em;
