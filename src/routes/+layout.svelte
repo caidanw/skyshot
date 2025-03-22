@@ -1,26 +1,48 @@
 <script>
 	import "../app.css";
-	import Header from "./Header.svelte";
-	import "./styles.css";
+
+	import { Separator } from "$lib/components/ui/separator";
+	import { ModeWatcher } from "mode-watcher";
+	import ModeToggle from "$lib/components/ModeToggle.svelte";
 </script>
 
-<div class="app">
-	<Header />
+<ModeWatcher />
+<div class="min-h-screen flex flex-col">
+	<!-- <Header /> -->
 
-	<main>
+	<div
+		class="container flex flex-col items-start justify-between space-y-2 py-4 sm:flex-row sm:items-center sm:space-y-0 md:h-16"
+	>
+		<h2 class="text-lg font-semibold">SkyShot</h2>
+		<div class="ml-auto flex w-full space-x-2 sm:justify-end">
+			<ModeToggle />
+		</div>
+	</div>
+	<Separator />
+
+	<main class="container p-8 flex-1">
 		<slot />
 	</main>
 
+	<Separator />
 	<footer>
 		<p>
 			<span>a creation from</span>
-			<a href="https://bsky.app/profile/caidan.dev" target="_blank">
+			<a
+				class="text-sky-500"
+				href="https://bsky.app/profile/caidan.dev"
+				target="_blank"
+			>
 				<span>@caidan.dev</span>
 			</a>
 		</p>
 		<p>
 			<span>open source on</span>
-			<a href="https://github.com/caidanw/skyshot" target="_blank">
+			<a
+				class="text-sky-500"
+				href="https://github.com/caidanw/skyshot"
+				target="_blank"
+			>
 				<span>github</span>
 			</a>
 		</p>
@@ -28,22 +50,6 @@
 </div>
 
 <style>
-	.app {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
-
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-
 	footer {
 		display: flex;
 		flex-direction: column;

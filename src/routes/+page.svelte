@@ -17,7 +17,7 @@
 <div class="card-grid">
 	{#each cards as card (card.id)}
 		<FriendCard {card} />
-		<BorderlessCard {card} />
+		<!-- <BorderlessCard {card} /> -->
 	{/each}
 </div>
 
