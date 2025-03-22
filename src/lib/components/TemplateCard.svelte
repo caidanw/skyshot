@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Card } from "$lib";
 
-	const { card = $bindable() }: { card: Card } = $props();
+	const { card }: { card: Card } = $props();
 </script>
 
 <div class="card-frame">

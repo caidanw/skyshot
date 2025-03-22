@@ -49,7 +49,7 @@
 
 <div class="main-grid-container">
   <div class="grid-item">
-    <TemplateCard bind:card />
+    <TemplateCard {card} />
   </div>
 
   <div class="grid-item">
