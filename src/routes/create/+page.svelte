@@ -8,6 +8,7 @@
   import { Label } from "$lib/components/ui/label";
   import { AtpAgent } from "@atproto/api";
   import type { ProfileViewBasic } from "@atproto/api/dist/client/types/app/bsky/actor/defs";
+  import html2canvas from "html2canvas";
 
   let card: CardData = $state({
     $type: "app.skyshot.card",
@@ -79,10 +80,30 @@
       reader.readAsDataURL(file);
     }
   };
+
+  function downloadImage() {
+    const selector = "#capture-me";
+    const elem = document.querySelector(selector) satisfies HTMLElement | null;
+    if (!elem) {
+      throw new Error(`HTMLElement not found for selector '${selector}'`);
+    }
+
+    html2canvas(elem, {
+      backgroundColor: null,
+      windowWidth: elem.scrollWidth,
+      windowHeight: elem.scrollHeight,
+    }).then((canvas) => {
+      let link = document.createElement("a");
+      // TODO: the @ symbol might cause issues, but I like it for now
+      link.download = `skyshot@${card.subject.handle}.png`;
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  }
 </script>
 
 <div class="main-grid-container grid-cols-1 sm:grid-cols-2">
-  <div class="grid-item">
+  <div id="capture-me" class="grid-item">
     <TemplateCard {card} />
   </div>
 
@@ -146,7 +167,13 @@
       </Card.Content>
       <Card.Footer class="flex justify-between">
         <Button variant="destructive" onclick={history.back}>Cancel</Button>
-        <Button type="submit" class="submit-button">Create Card</Button>
+        <Button
+          onclick={(e) => {
+            e.preventDefault();
+            console.log("downloadImage");
+            downloadImage();
+          }}>Download Card</Button
+        >
       </Card.Footer>
     </Card.Root>
   </div>
