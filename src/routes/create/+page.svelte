@@ -81,7 +81,7 @@
   };
 </script>
 
-<div class="main-grid-container">
+<div class="main-grid-container grid-cols-1 sm:grid-cols-2">
   <div class="grid-item">
     <TemplateCard {card} />
   </div>
@@ -155,8 +155,7 @@
 <style>
   .main-grid-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 2rem;
     align-items: center;
     justify-items: center;
   }
