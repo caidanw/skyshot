@@ -20,7 +20,8 @@
 
 <style>
 	.card-frame {
-		width: 20rem;
+		min-width: 20rem;
+		max-width: 24rem;
 		aspect-ratio: 5/7;
 		border-radius: 1rem;
 		overflow: hidden;
