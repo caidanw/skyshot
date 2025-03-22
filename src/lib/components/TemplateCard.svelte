@@ -5,7 +5,7 @@
 </script>
 
 <div class="card-frame">
-	<div class="subject-name">{card.subject.handle}</div>
+	<div class="subject-name">@{card.subject.handle}</div>
 	<img src={card.photoUrl} alt={card.metadata.title} class="card-image" />
 	<div class="footer">
 		<span>Shot by</span>
