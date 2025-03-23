@@ -1,24 +1,36 @@
 <script lang="ts">
 	import * as THREE from "three";
 
-	// Simplified options interface
+	// Enhanced options interface with meaningful configuration options
 	interface CardOptions {
-		color?: number;
+		cardWidth?: number;
+		cardHeight?: number;
+		cardDepth?: number;
+		cardColor?: number;
 		edgeColor?: number;
-		wobble?: number;
-		float?: number;
-		mouseResponse?: number;
+		wobbleSpeed?: number;
+		wobbleAmount?: number;
+		floatSpeed?: number;
+		floatAmount?: number;
+		mouseInfluence?: number;
+		interactionDuration?: number;
 	}
 
-	// Simplified floating card action
+	// Enhanced floating card action
 	function floatingCard(node: HTMLElement, options: CardOptions = {}) {
-		// Simplified config with fewer options
+		// Configuration with reasonable defaults
 		const config = {
-			color: 0x2196f3,
+			cardWidth: 2.5,
+			cardHeight: 3.5,
+			cardDepth: 0.05,
+			cardColor: 0x2196f3,
 			edgeColor: 0x1565c0,
-			wobble: 0.08,
-			float: 0.1,
-			mouseResponse: 0.5,
+			wobbleSpeed: 0.8,
+			wobbleAmount: 0.08,
+			floatSpeed: 0.5,
+			floatAmount: 0.1,
+			mouseInfluence: 0.5,
+			interactionDuration: 5000, // milliseconds
 			...options,
 		};
 
@@ -47,40 +59,34 @@
 		light.position.set(5, 5, 5);
 		scene.add(light);
 
-		// Create card
-		const geometry = new THREE.BoxGeometry(2.5, 3.5, 0.05);
+		// Create card with configurable dimensions
+		const geometry = new THREE.BoxGeometry(
+			config.cardWidth,
+			config.cardHeight,
+			config.cardDepth,
+		);
+
+		const frontMaterial = new THREE.MeshStandardMaterial({
+			color: config.cardColor,
+			metalness: 0.3,
+			roughness: 0.4,
+		});
+
+		const edgeMaterial = new THREE.MeshStandardMaterial({
+			color: config.edgeColor,
+			metalness: 0.5,
+			roughness: 0.2,
+		});
+
 		const materials = [
-			new THREE.MeshStandardMaterial({
-				color: config.edgeColor,
-				metalness: 0.5,
-				roughness: 0.0,
-			}), // sides
-			new THREE.MeshStandardMaterial({
-				color: config.edgeColor,
-				metalness: 0.5,
-				roughness: 0.2,
-			}),
-			new THREE.MeshStandardMaterial({
-				color: config.edgeColor,
-				metalness: 0.5,
-				roughness: 0.2,
-			}),
-			new THREE.MeshStandardMaterial({
-				color: config.edgeColor,
-				metalness: 0.5,
-				roughness: 0.2,
-			}),
-			new THREE.MeshStandardMaterial({
-				color: config.color,
-				metalness: 0.3,
-				roughness: 0.4,
-			}), // front/back
-			new THREE.MeshStandardMaterial({
-				color: config.color,
-				metalness: 0.3,
-				roughness: 0.4,
-			}),
+			edgeMaterial, // right
+			edgeMaterial, // left
+			edgeMaterial, // top
+			edgeMaterial, // bottom
+			frontMaterial, // front
+			frontMaterial, // back
 		];
+
 		const card = new THREE.Mesh(geometry, materials);
 		scene.add(card);
 
@@ -109,12 +115,15 @@
 
 			// Reset timer
 			if (interactionTimer) clearTimeout(interactionTimer);
-			interactionTimer = setTimeout(() => (isInteracting = false), 5000);
+			interactionTimer = setTimeout(
+				() => (isInteracting = false),
+				config.interactionDuration,
+			) as unknown as number;
 
-			// event.preventDefault();
+			event.preventDefault();
 		}
 
-		// Update rotation based on pointer position
+		// Update rotation based on pointer position with inverted vertical response
 		function updateRotation(x: number, y: number) {
 			const rect = node.getBoundingClientRect();
 
@@ -122,9 +131,11 @@
 			const normalizedX = ((x - rect.left) / rect.width) * 2 - 1;
 			const normalizedY = -(((y - rect.top) / rect.height) * 2 - 1);
 
-			// Set target rotation
-			targetRotationY = normalizedX * config.mouseResponse;
-			targetRotationX = normalizedY * config.mouseResponse;
+			// Set target rotation - inverse the Y rotation to push the card away from mouse
+			targetRotationY = normalizedX * config.mouseInfluence;
+
+			// Invert the X rotation so mouse at top pushes top of card back (and bottom for bottom)
+			targetRotationX = -normalizedY * config.mouseInfluence;
 		}
 
 		// Handle pointer move
@@ -163,11 +174,13 @@
 
 		function animate(time: number) {
 			frameId = requestAnimationFrame(animate);
-			time *= 0.001;
+			time /= 700;
 
-			// Auto animation values
-			const autoX = Math.cos(time * 0.8) * config.wobble;
-			const autoY = Math.sin(time * 1.2) * config.wobble;
+			// Auto animation values with configurable speed and amount
+			const autoX =
+				Math.cos(time * config.wobbleSpeed) * config.wobbleAmount;
+			const autoY =
+				Math.sin(time * config.wobbleSpeed * 1.3) * config.wobbleAmount;
 
 			// Smooth transition to target rotation
 			currentRotationX += (targetRotationX - currentRotationX) * 0.1;
@@ -177,12 +190,11 @@
 			card.rotation.x = isInteracting ? currentRotationX : autoX;
 			card.rotation.y = isInteracting ? currentRotationY : autoY;
 
-			// Floating movement
-			card.position.y = Math.sin(time * 0.5) * config.float;
+			// Floating movement with configurable speed and amount
+			card.position.y =
+				Math.sin(time * config.floatSpeed) * config.floatAmount;
 
 			renderer.render(scene, camera);
-
-			console.log(isInteracting);
 		}
 
 		animate(0);
@@ -224,5 +236,6 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
+		cursor: pointer;
 	}
 </style>
