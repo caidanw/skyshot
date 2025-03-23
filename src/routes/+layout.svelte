@@ -21,7 +21,7 @@
 	</div>
 	<Separator />
 
-	<main class="container p-8 flex-1">
+	<main class="flex-1">
 		<slot />
 	</main>
 

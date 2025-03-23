@@ -102,7 +102,7 @@
   }
 </script>
 
-<div class="main-grid-container grid-cols-1 sm:grid-cols-2">
+<div class="container p-8 main-grid-container grid-cols-1 sm:grid-cols-2">
   <div id="capture-me" class="grid-item">
     <TemplateCard {card} />
   </div>

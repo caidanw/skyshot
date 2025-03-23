@@ -32,7 +32,7 @@
   }
 </script>
 
-<div class="card-form-container">
+<div class="container p-8 card-form-container">
   <h2>Create New Card</h2>
   <form class="card-form" onsubmit={handleSubmit}>
     <div class="form-group">
