@@ -7,14 +7,15 @@
 </script>
 
 <ModeWatcher />
+
 <div class="min-h-screen flex flex-col">
 	<!-- <Header /> -->
 
 	<div
-		class="container flex flex-row items-center justify-between py-4 sm:flex-row sm:items-center md:h-16"
+		class="container flex flex-row items-center justify-between py-2 sm:flex-row sm:items-center md:h-16"
 	>
-		<h2 class="text-lg font-semibold w-full">SkyShot</h2>
-		<div class="ml-auto flex space-x-2 sm:justify-end">
+		<a href="/" class="text-xl font-bold pr-2">SkyShot</a>
+		<div class="flex gap-2">
 			<ModeToggle />
 		</div>
 	</div>
@@ -25,11 +26,13 @@
 	</main>
 
 	<Separator />
-	<footer>
+	<footer
+		class="container flex flex-col items-center justify-center py-2 leading-5"
+	>
 		<p>
 			<span>a creation from</span>
 			<a
-				class="text-sky-500"
+				class="font-medium text-sky-500"
 				href="https://bsky.app/profile/caidan.dev"
 				target="_blank"
 			>
@@ -39,7 +42,7 @@
 		<p>
 			<span>open source on</span>
 			<a
-				class="text-sky-500"
+				class="font-medium text-sky-500"
 				href="https://github.com/caidanw/skyshot"
 				target="_blank"
 			>
@@ -48,24 +51,3 @@
 		</p>
 	</footer>
 </div>
-
-<style>
-	footer {
-		/* display: hidden; */
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
-</style>
