@@ -39,12 +39,15 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
     ...options,
   };
 
+  const nodeSize = node.getBoundingClientRect();
+
   // Setup renderer with physically correct lighting
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true,
   });
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  // renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(nodeSize.width, nodeSize.height);
   renderer.setClearColor(0x000000, 0);
   // Using toneMapping for better visual quality
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -55,7 +58,8 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
     75,
-    window.innerWidth / window.innerHeight,
+    // window.innerWidth / window.innerHeight,
+    nodeSize.width / nodeSize.height,
     0.1,
     1000,
   );
@@ -207,8 +211,10 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
 
   // Handle window resize
   function handleResize() {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
+    // renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(nodeSize.width, nodeSize.height);
+    // camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = nodeSize.width / nodeSize.height;
     camera.updateProjectionMatrix();
   }
 

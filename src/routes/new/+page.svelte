@@ -32,42 +32,44 @@
   }
 </script>
 
-<div class="container p-8 card-form-container">
-  <h2>Create New Card</h2>
-  <form class="card-form" onsubmit={handleSubmit}>
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input
-        type="text"
-        id="name"
-        bind:value={formData.name}
-        required
-        oninput={findBskyUser}
-      />
-    </div>
-    <div class="form-group">
-      <label for="photographer">Photographer</label>
-      <input
-        type="text"
-        id="photographer"
-        bind:value={formData.photographer}
-        required
-      />
-    </div>
-    <div class="form-group">
-      <label for="photo_url">Photo URL</label>
-      <input
-        type="url"
-        id="photo_url"
-        bind:value={formData.photo_url}
-        required
-      />
-    </div>
-    <div class="form-actions">
-      <button type="button" class="cancel-button" onclick={history.back}>
-        Cancel
-      </button>
-      <button type="submit" class="submit-button">Create Card</button>
-    </div>
-  </form>
-</div>
+<main class="container p-8 flex-1 flex flex-col">
+  <div class="card-form-container">
+    <h2>Create New Card</h2>
+    <form class="card-form" onsubmit={handleSubmit}>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          bind:value={formData.name}
+          required
+          oninput={findBskyUser}
+        />
+      </div>
+      <div class="form-group">
+        <label for="photographer">Photographer</label>
+        <input
+          type="text"
+          id="photographer"
+          bind:value={formData.photographer}
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="photo_url">Photo URL</label>
+        <input
+          type="url"
+          id="photo_url"
+          bind:value={formData.photo_url}
+          required
+        />
+      </div>
+      <div class="form-actions">
+        <button type="button" class="cancel-button" onclick={history.back}>
+          Cancel
+        </button>
+        <button type="submit" class="submit-button">Create Card</button>
+      </div>
+    </form>
+  </div>
+</main>

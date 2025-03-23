@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { floatingCard } from "./floatingCardAction";
+	import { floatingCard } from "./floatingCardAction.svelte";
 </script>
 
-<div use:floatingCard class="card-container"></div>
+<div use:floatingCard class="card-container flex-grow"></div>
 
 <style>
 	.card-container {

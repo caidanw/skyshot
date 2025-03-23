@@ -21,9 +21,7 @@
 	</div>
 	<Separator />
 
-	<main class="flex-1">
-		<slot />
-	</main>
+	<slot />
 
 	<Separator />
 	<footer
