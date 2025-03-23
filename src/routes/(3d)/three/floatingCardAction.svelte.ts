@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import WebGL from "three/addons/capabilities/WebGL.js";
 
 interface CardOptions {
   cardWidth?: number;
@@ -38,6 +39,18 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
     envMapIntensity: 1.2, // Slightly boosted environment map for more pronounced reflections
     ...options,
   };
+
+  // Ensure WebGL2 is available
+  if (!WebGL.isWebGL2Available()) {
+    const warning = WebGL.getWebGL2ErrorMessage();
+    node.appendChild(warning);
+
+    return {
+      destroy() {
+        node.removeChild(renderer.domElement);
+      },
+    };
+  }
 
   let nodeSize = node.getBoundingClientRect();
 
