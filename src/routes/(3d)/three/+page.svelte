@@ -14,12 +14,6 @@
 		floatAmount?: number;
 	}
 
-	// Define the action return type
-	interface ActionReturn {
-		update(options: CardStyleOptions): void;
-		destroy(): void;
-	}
-
 	// Custom action for creating a floating card
 	function floatingCard(node: HTMLElement, options: CardStyleOptions = {}) {
 		// Default options
