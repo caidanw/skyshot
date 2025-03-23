@@ -1,10 +1,23 @@
-<script>
-	import { onMount } from "svelte";
+<script lang="ts">
+	import type { Action } from "@sveltejs/kit";
 	import * as THREE from "three";
 
-	let container;
+	// Custom action for creating a floating card
+	const floatingCard: Action = (node, options = {}) => {
+		// Default options
+		const config = {
+			cardWidth: 2,
+			cardHeight: 3,
+			cardDepth: 0.05,
+			cardColor: 0x2196f3,
+			edgeColor: 0x1565c0,
+			wobbleSpeed: 0.8,
+			wobbleAmount: 0.08,
+			floatSpeed: 0.5,
+			floatAmount: 0.1,
+			...options,
+		};
 
-	onMount(() => {
 		// Set up scene
 		const scene = new THREE.Scene();
 		const camera = new THREE.PerspectiveCamera(
@@ -19,7 +32,7 @@
 		});
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		renderer.setClearColor(0x000000, 0);
-		container.appendChild(renderer.domElement);
+		node.appendChild(renderer.domElement);
 
 		// Add ambient light
 		const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -31,24 +44,21 @@
 		scene.add(directionalLight);
 
 		// Create card geometry
-		const cardWidth = 2;
-		const cardHeight = 3;
-		const cardDepth = 0.05;
 		const geometry = new THREE.BoxGeometry(
-			cardWidth,
-			cardHeight,
-			cardDepth,
+			config.cardWidth,
+			config.cardHeight,
+			config.cardDepth,
 		);
 
 		// Create materials for the card
 		const frontMaterial = new THREE.MeshStandardMaterial({
-			color: 0x2196f3,
+			color: config.cardColor,
 			metalness: 0.3,
 			roughness: 0.4,
 		});
 
 		const edgeMaterial = new THREE.MeshStandardMaterial({
-			color: 0x1565c0,
+			color: config.edgeColor,
 			metalness: 0.5,
 			roughness: 0.2,
 		});
@@ -71,10 +81,7 @@
 
 		// Animation variables
 		let time = 0;
-		const wobbleSpeed = 0.8;
-		const wobbleAmount = 0.08;
-		const floatSpeed = 0.5;
-		const floatAmount = 0.1;
+		let animationFrame;
 
 		// Handle window resize
 		const handleResize = () => {
@@ -90,34 +97,53 @@
 
 		// Animation loop
 		const animate = () => {
-			requestAnimationFrame(animate);
+			animationFrame = requestAnimationFrame(animate);
 
 			time += 0.01;
 
 			// Wobble rotation
-			card.rotation.x = Math.sin(time * wobbleSpeed) * wobbleAmount;
-			card.rotation.y = Math.sin(time * wobbleSpeed * 1.3) * wobbleAmount;
+			card.rotation.x =
+				Math.sin(time * config.wobbleSpeed) * config.wobbleAmount;
+			card.rotation.y =
+				Math.sin(time * config.wobbleSpeed * 1.3) * config.wobbleAmount;
 
 			// Floating movement
-			card.position.y = Math.sin(time * floatSpeed) * floatAmount;
+			card.position.y =
+				Math.sin(time * config.floatSpeed) * config.floatAmount;
 
 			renderer.render(scene, camera);
 		};
 
 		animate();
 
-		return () => {
-			window.removeEventListener("resize", handleResize);
-			container.removeChild(renderer.domElement);
-			geometry.dispose();
-			frontMaterial.dispose();
-			edgeMaterial.dispose();
-			renderer.dispose();
+		return {
+			update(newOptions) {
+				// Update options if they change
+				Object.assign(config, newOptions);
+			},
+			destroy() {
+				// Clean up resources when component is destroyed
+				cancelAnimationFrame(animationFrame);
+				window.removeEventListener("resize", handleResize);
+				node.removeChild(renderer.domElement);
+				geometry.dispose();
+				frontMaterial.dispose();
+				edgeMaterial.dispose();
+				renderer.dispose();
+			},
 		};
-	});
+	};
 </script>
 
-<div bind:this={container} class="full-screen-container"></div>
+<!-- Example usage with Svelte 5 syntax -->
+<div
+	use:floatingCard={{
+		cardColor: 0x3f51b5,
+		wobbleAmount: 0.1,
+		floatAmount: 0.15,
+	}}
+	class="full-screen-container"
+></div>
 
 <style>
 	.full-screen-container {
