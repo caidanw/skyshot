@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Action } from "@sveltejs/kit";
+	import type { Action } from "svelte/action";
 	import * as THREE from "three";
 
 	// Custom action for creating a floating card
