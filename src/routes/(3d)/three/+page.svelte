@@ -146,14 +146,7 @@
 </script>
 
 <!-- Example usage with Svelte 5 syntax -->
-<div
-	use:floatingCard={{
-		cardColor: 0x3f51b5,
-		wobbleAmount: 0.1,
-		floatAmount: 0.15,
-	}}
-	class="full-screen-container"
-></div>
+<div use:floatingCard class="full-screen-container"></div>
 
 <style>
 	.full-screen-container {
@@ -162,6 +155,5 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		z-index: -1;
 	}
 </style>
