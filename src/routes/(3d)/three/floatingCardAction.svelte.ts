@@ -57,13 +57,13 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
   // Setup scene and camera
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
-    75,
+    45,
     // window.innerWidth / window.innerHeight,
     nodeSize.width / nodeSize.height,
     0.1,
     1000,
   );
-  camera.position.z = 3.2;
+  camera.position.z = 5.2;
 
   // Create environment map for realistic reflections
   const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256);
