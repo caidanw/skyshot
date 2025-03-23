@@ -39,7 +39,7 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
     ...options,
   };
 
-  const nodeSize = node.getBoundingClientRect();
+  let nodeSize = node.getBoundingClientRect();
 
   // Setup renderer with physically correct lighting
   const renderer = new THREE.WebGLRenderer({
@@ -63,7 +63,7 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
     0.1,
     1000,
   );
-  camera.position.z = 5;
+  camera.position.z = 3.2;
 
   // Create environment map for realistic reflections
   const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256);
@@ -211,6 +211,8 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
 
   // Handle window resize
   function handleResize() {
+    nodeSize = node.getBoundingClientRect();
+
     // renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setSize(nodeSize.width, nodeSize.height);
     // camera.aspect = window.innerWidth / window.innerHeight;
@@ -220,9 +222,7 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
 
   // Add event listeners
   node.addEventListener("mousedown", startInteraction);
-  node.addEventListener("touchstart", startInteraction, {
-    passive: false,
-  });
+  node.addEventListener("touchstart", startInteraction, { passive: false });
   node.addEventListener("mouseup", endInteraction);
   node.addEventListener("touchend", endInteraction);
   window.addEventListener("mousemove", handleMove);
@@ -295,36 +295,27 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
     update(newOptions: CardOptions) {
       Object.assign(config, newOptions);
 
-      // Update materials based on new configuration
-      if (
-        newOptions.glossiness !== undefined ||
-        newOptions.reflectivity !== undefined ||
-        newOptions.envMapIntensity !== undefined ||
-        newOptions.cardColor !== undefined ||
-        newOptions.edgeColor !== undefined
-      ) {
-        if (newOptions.cardColor !== undefined) {
-          frontMaterial.color.set(config.cardColor);
-        }
+      if (newOptions.cardColor !== undefined) {
+        frontMaterial.color.set(config.cardColor);
+      }
 
-        if (newOptions.edgeColor !== undefined) {
-          edgeMaterial.color.set(config.edgeColor);
-        }
+      if (newOptions.edgeColor !== undefined) {
+        edgeMaterial.color.set(config.edgeColor);
+      }
 
-        if (newOptions.glossiness !== undefined) {
-          frontMaterial.roughness = 1 - config.glossiness;
-          edgeMaterial.roughness = Math.max(0.1, 1 - config.glossiness);
-        }
+      if (newOptions.glossiness !== undefined) {
+        frontMaterial.roughness = 1 - config.glossiness;
+        edgeMaterial.roughness = Math.max(0.1, 1 - config.glossiness);
+      }
 
-        if (newOptions.reflectivity !== undefined) {
-          frontMaterial.reflectivity = config.reflectivity;
-          edgeMaterial.reflectivity = config.reflectivity * 0.9;
-        }
+      if (newOptions.reflectivity !== undefined) {
+        frontMaterial.reflectivity = config.reflectivity;
+        edgeMaterial.reflectivity = config.reflectivity * 0.9;
+      }
 
-        if (newOptions.envMapIntensity !== undefined) {
-          frontMaterial.envMapIntensity = config.envMapIntensity;
-          edgeMaterial.envMapIntensity = config.envMapIntensity * 0.8;
-        }
+      if (newOptions.envMapIntensity !== undefined) {
+        frontMaterial.envMapIntensity = config.envMapIntensity;
+        edgeMaterial.envMapIntensity = config.envMapIntensity * 0.8;
       }
     },
     destroy() {
@@ -336,6 +327,7 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
       node.removeEventListener("touchstart", startInteraction);
       window.removeEventListener("mousemove", handleMove);
       window.removeEventListener("touchmove", handleMove);
+      node.removeEventListener("resize", handleResize);
       window.removeEventListener("resize", handleResize);
 
       if (interactionTimer) clearTimeout(interactionTimer);
