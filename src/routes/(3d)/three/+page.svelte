@@ -121,7 +121,7 @@
 
 			// Wobble rotation
 			card.rotation.x =
-				Math.sin(time * config.wobbleSpeed) * config.wobbleAmount;
+				Math.cos(time * config.wobbleSpeed) * config.wobbleAmount;
 			card.rotation.y =
 				Math.sin(time * config.wobbleSpeed * 1.3) * config.wobbleAmount;
 
