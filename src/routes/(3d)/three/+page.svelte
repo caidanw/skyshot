@@ -47,7 +47,7 @@
 		node.appendChild(renderer.domElement);
 
 		// Add ambient light
-		const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+		const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
 		scene.add(ambientLight);
 
 		// Add directional light for shadows
@@ -91,10 +91,6 @@
 		// Position camera
 		camera.position.z = 5;
 
-		// Animation variables
-		let time = 0;
-		let animationFrame: number;
-
 		// Handle window resize
 		const handleResize = (): void => {
 			const width = window.innerWidth;
@@ -104,16 +100,18 @@
 			camera.aspect = width / height;
 			camera.updateProjectionMatrix();
 		};
-
 		window.addEventListener("resize", handleResize);
 
+		// Animation variables
+		let animationFrame: number;
+
 		// Animation loop
-		const animate = (): void => {
+		const animate: FrameRequestCallback = (time) => {
 			animationFrame = requestAnimationFrame(animate);
 
-			time += 0.01;
+			time /= 700;
 
-			// Wobble rotation
+			// Wobble rotation pattern
 			card.rotation.x =
 				Math.cos(time * config.wobbleSpeed) * config.wobbleAmount;
 			card.rotation.y =
@@ -126,7 +124,7 @@
 			renderer.render(scene, camera);
 		};
 
-		animate();
+		animate(0);
 
 		return {
 			update(newOptions: CardStyleOptions): void {
