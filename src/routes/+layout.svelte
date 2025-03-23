@@ -11,10 +11,10 @@
 	<!-- <Header /> -->
 
 	<div
-		class="container flex flex-col items-start justify-between space-y-2 py-4 sm:flex-row sm:items-center sm:space-y-0 md:h-16"
+		class="container flex flex-row items-center justify-between py-4 sm:flex-row sm:items-center md:h-16"
 	>
-		<h2 class="text-lg font-semibold">SkyShot</h2>
-		<div class="ml-auto flex w-full space-x-2 sm:justify-end">
+		<h2 class="text-lg font-semibold w-full">SkyShot</h2>
+		<div class="ml-auto flex space-x-2 sm:justify-end">
 			<ModeToggle />
 		</div>
 	</div>
@@ -51,6 +51,7 @@
 
 <style>
 	footer {
+		/* display: hidden; */
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
