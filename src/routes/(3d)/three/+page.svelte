@@ -1,9 +1,7 @@
 <script lang="ts">
-	import * as THREE from "three";
 	import { floatingCard } from "./floatingCardAction";
 </script>
 
-<!-- Usage -->
 <div use:floatingCard class="card-container"></div>
 
 <style>

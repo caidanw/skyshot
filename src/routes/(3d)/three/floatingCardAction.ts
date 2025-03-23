@@ -64,10 +64,8 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
   // Create environment map for realistic reflections
   const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256);
   cubeRenderTarget.texture.type = THREE.HalfFloatType;
-  const cubeCamera = new THREE.CubeCamera(0.1, 1000, cubeRenderTarget);
 
   // Create a simple environment for reflections
-  const envScene = new THREE.Scene();
   const gradientTexture = new THREE.CubeTextureLoader().load([
     createGradientDataURL(0xd0e0f0, 0x87ceeb), // right
     createGradientDataURL(0xd0e0f0, 0x87ceeb), // left
@@ -231,7 +229,7 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
 
   function animate(time: number) {
     frameId = requestAnimationFrame(animate);
-    const deltaTime = time - lastTime;
+    // const deltaTime = time - lastTime;
     lastTime = time;
 
     // Normalized time for animations
