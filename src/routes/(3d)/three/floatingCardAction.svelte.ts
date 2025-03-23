@@ -170,7 +170,7 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
     updateRotation(pos.x, pos.y);
   }
 
-  function endInteraction(event: MouseEvent | TouchEvent) {
+  function endInteraction(_event: MouseEvent | TouchEvent) {
     // Reset timer
     if (interactionTimer) clearTimeout(interactionTimer);
     interactionTimer = setTimeout(
