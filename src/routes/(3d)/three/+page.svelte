@@ -1,13 +1,31 @@
 <script lang="ts">
-	import type { Action } from "svelte/action";
 	import * as THREE from "three";
 
+	// Define types for the action options
+	interface CardStyleOptions {
+		cardWidth?: number;
+		cardHeight?: number;
+		cardDepth?: number;
+		cardColor?: number;
+		edgeColor?: number;
+		wobbleSpeed?: number;
+		wobbleAmount?: number;
+		floatSpeed?: number;
+		floatAmount?: number;
+	}
+
+	// Define the action return type
+	interface ActionReturn {
+		update(options: CardStyleOptions): void;
+		destroy(): void;
+	}
+
 	// Custom action for creating a floating card
-	const floatingCard: Action = (node, options = {}) => {
+	function floatingCard(node: HTMLElement, options: CardStyleOptions = {}) {
 		// Default options
 		const config = {
-			cardWidth: 2,
-			cardHeight: 3,
+			cardWidth: 2.5,
+			cardHeight: 3.5,
 			cardDepth: 0.05,
 			cardColor: 0x2196f3,
 			edgeColor: 0x1565c0,
@@ -39,7 +57,7 @@
 		scene.add(ambientLight);
 
 		// Add directional light for shadows
-		const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+		const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
 		directionalLight.position.set(5, 5, 5);
 		scene.add(directionalLight);
 
@@ -81,10 +99,10 @@
 
 		// Animation variables
 		let time = 0;
-		let animationFrame;
+		let animationFrame: number;
 
 		// Handle window resize
-		const handleResize = () => {
+		const handleResize = (): void => {
 			const width = window.innerWidth;
 			const height = window.innerHeight;
 
@@ -96,7 +114,7 @@
 		window.addEventListener("resize", handleResize);
 
 		// Animation loop
-		const animate = () => {
+		const animate = (): void => {
 			animationFrame = requestAnimationFrame(animate);
 
 			time += 0.01;
@@ -117,11 +135,11 @@
 		animate();
 
 		return {
-			update(newOptions) {
+			update(newOptions: CardStyleOptions): void {
 				// Update options if they change
 				Object.assign(config, newOptions);
 			},
-			destroy() {
+			destroy(): void {
 				// Clean up resources when component is destroyed
 				cancelAnimationFrame(animationFrame);
 				window.removeEventListener("resize", handleResize);
@@ -132,7 +150,7 @@
 				renderer.dispose();
 			},
 		};
-	};
+	}
 </script>
 
 <!-- Example usage with Svelte 5 syntax -->
