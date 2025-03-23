@@ -12,6 +12,7 @@ interface CardOptions {
   floatAmount?: number;
   mouseInfluence?: number;
   interactionDuration?: number;
+  wobbleDuringInteractionAmount?: number;
   glossiness?: number; // New option for controlling glossiness
   reflectivity?: number; // New option for controlling reflectivity
   envMapIntensity?: number; // New option for controlling environment map intensity
@@ -31,6 +32,7 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
     floatAmount: 0.1,
     mouseInfluence: 0.5,
     interactionDuration: 0, // milliseconds
+    wobbleDuringInteractionAmount: 0.2, // Amount of wobble during interaction
     glossiness: 0.9, // High glossiness for that shiny look
     reflectivity: 0.7, // Medium-high reflectivity
     envMapIntensity: 1.2, // Slightly boosted environment map for more pronounced reflections
@@ -44,8 +46,8 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
   });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0x000000, 0);
-  renderer.physicallyCorrectLights = true; // Enable physically correct lighting
-  renderer.toneMapping = THREE.ACESFilmicToneMapping; // Better tone mapping for realistic look
+  // Using toneMapping for better visual quality
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.2; // Slightly brighter exposure
   node.appendChild(renderer.domElement);
 
@@ -246,8 +248,12 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
     currentRotationY += (targetRotationY - currentRotationY) * 0.1;
 
     // Set rotation (blend between auto and interactive)
-    card.rotation.x = isInteracting ? currentRotationX + autoX : autoX;
-    card.rotation.y = isInteracting ? currentRotationY + autoY : autoY;
+    card.rotation.x = isInteracting
+      ? currentRotationX + autoX * config.wobbleDuringInteractionAmount
+      : autoX;
+    card.rotation.y = isInteracting
+      ? currentRotationY + autoY * config.wobbleDuringInteractionAmount
+      : autoY;
 
     // Floating movement with configurable speed and amount
     card.position.y =
