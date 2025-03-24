@@ -38,12 +38,12 @@
 	let float = 0;
 	useTask("floatAnimation", (delta) => {
 		float += delta;
-		console.log("float", float);
+		// console.log("float", float);
 
 		// Floating movement with configurable speed and amount
 		card.position.y = Math.sin(float * config.floatSpeed);
 		card.position.y *= config.floatAmount;
-		console.log("card.position.y", card.position.y);
+		// console.log("card.position.y", card.position.y);
 	});
 
 	useTask("rotateAnimation", (delta) => {
