@@ -15,5 +15,7 @@
 		height: 100%;
 		width: 100%;
 		background-color: rgb(14, 22, 37);
+
+		flex: 1;
 	}
 </style>

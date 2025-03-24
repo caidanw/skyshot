@@ -4,6 +4,7 @@
 		interactivity,
 		OrbitControls,
 		RoundedBoxGeometry,
+		TrackballControls,
 		useTexture,
 	} from "@threlte/extras";
 	import { Spring } from "svelte/motion";
@@ -26,14 +27,9 @@
 	// });
 </script>
 
-<T.PerspectiveCamera
-	makeDefault
-	position={[10, 5, 10]}
-	oncreate={(ref) => {
-		ref.lookAt(0, 1, 0);
-	}}
->
-	<OrbitControls enableDamping />
+<T.PerspectiveCamera makeDefault position={[0, 0, 10]}>
+	<!-- <OrbitControls enableDamping /> -->
+	<TrackballControls rotateSpeed={3} />
 </T.PerspectiveCamera>
 
 <T.AmbientLight intensity={0.5} />
