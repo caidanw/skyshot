@@ -3,19 +3,10 @@
 	import Scene from "./Scene.svelte";
 </script>
 
-<div>
-	<Canvas>
-		<Scene />
-	</Canvas>
-</div>
-
-<style>
-	div {
-		position: relative;
-		height: 100%;
-		width: 100%;
-		background-color: rgb(14, 22, 37);
-
-		flex: 1;
-	}
-</style>
+<main class="relative flex-1">
+	<div class="absolute inset-0">
+		<Canvas>
+			<Scene />
+		</Canvas>
+	</div>
+</main>
