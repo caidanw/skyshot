@@ -60,7 +60,7 @@
 <T.AmbientLight intensity={0.5} />
 <T.DirectionalLight position={[0, 10, 10]} />
 
-<T.Mesh bind:ref={card} scale={2}>
+<T.Mesh bind:ref={card} scale={1.5}>
 	<RoundedBoxGeometry args={[2.5, 3.5, 0.08]} creaseAngle={0.8} />
 	<!-- <T.BoxGeometry args={[2.5, 3.5, 0.08]} /> -->
 
