@@ -11,9 +11,9 @@
 
 <style>
 	div {
-		display: relative;
-		width: 100%;
+		position: relative;
 		height: 100%;
-		cursor: pointer;
+		width: 100%;
+		background-color: rgb(14, 22, 37);
 	}
 </style>
