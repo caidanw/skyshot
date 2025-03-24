@@ -2,8 +2,8 @@
 	import { T, useTask } from "@threlte/core";
 	import {
 		interactivity,
+		OrbitControls,
 		RoundedBoxGeometry,
-		TrackballControls,
 		useTexture,
 	} from "@threlte/extras";
 	import { Mesh } from "three";
@@ -53,8 +53,8 @@
 </script>
 
 <T.PerspectiveCamera makeDefault position={[0, 0, 10]}>
-	<!-- <OrbitControls enableDamping /> -->
-	<TrackballControls rotateSpeed={3} />
+	<OrbitControls enableDamping enablePan={false} />
+	<!-- <TrackballControls rotateSpeed={3} /> -->
 </T.PerspectiveCamera>
 
 <T.AmbientLight intensity={0.5} />
