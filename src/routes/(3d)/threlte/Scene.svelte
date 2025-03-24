@@ -1,5 +1,16 @@
 <script>
-	import { T } from "@threlte/core";
+	import { T, useTask } from "@threlte/core";
+	import { interactivity } from "@threlte/extras";
+	import { Spring } from "svelte/motion";
+
+	interactivity();
+
+	const scale = new Spring(1);
+
+	let rotation = 0;
+	useTask((delta) => {
+		rotation += delta;
+	});
 </script>
 
 <T.PerspectiveCamera
@@ -10,7 +21,19 @@
 	}}
 />
 
-<T.Mesh position.y={1}>
-	<T.BoxGeometry args={[2.5, 3.5, 1]} />
-	<T.MeshBasicMaterial color="hotpink" />
+<T.DirectionalLight position={[0, 10, 10]} />
+
+<T.Mesh
+	rotation.y={rotation}
+	position.y={1}
+	scale={scale.current}
+	onpointerenter={() => {
+		scale.target = 1.5;
+	}}
+	onpointerleave={() => {
+		scale.target = 1;
+	}}
+>
+	<T.BoxGeometry args={[2.5, 3.5, 0.08]} />
+	<T.MeshStandardMaterial color="white" />
 </T.Mesh>
