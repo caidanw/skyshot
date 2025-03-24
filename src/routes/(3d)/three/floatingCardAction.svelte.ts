@@ -76,7 +76,7 @@ export function floatingCard(node: HTMLElement, options: CardOptions = {}) {
     0.1,
     1000,
   );
-  camera.position.z = 5.2;
+  camera.position.z = 7.2;
 
   // Create environment map for realistic reflections
   const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256);
