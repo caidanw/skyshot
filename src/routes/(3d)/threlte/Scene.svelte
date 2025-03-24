@@ -6,7 +6,7 @@
 		RoundedBoxGeometry,
 		useTexture,
 	} from "@threlte/extras";
-	import { Mesh } from "three";
+	import type { Mesh } from "three";
 
 	interactivity();
 
