@@ -46,6 +46,10 @@
 		console.log("card.position.y", card.position.y);
 	});
 
+	useTask("rotateAnimation", (delta) => {
+		card.rotation.y += delta * 0.3;
+	});
+
 	// const idleTask = useTask("idle", (delta) => {
 	// 	// wobble-effect
 	// 	// bounce effect
