@@ -35,6 +35,7 @@
 
 	// const scale = new Spring(2);
 
+	// svelte-ignore non_reactive_update
 	let card: Mesh;
 
 	let float = 0;
@@ -43,17 +44,20 @@
 		// console.log("float", float);
 
 		// Floating movement with configurable speed and amount
-		card.position.y = Math.sin(float * config.floatSpeed);
-		card.position.y *= config.floatAmount;
+		card.position.y =
+			Math.sin(float * config.floatSpeed) * config.floatAmount;
 		// console.log("card.position.y", card.position.y);
 	});
 
+	let wobble = 0;
 	useTask("wobbleAnimation", (delta) => {
+		wobble += delta;
+
 		// Wobble effect with configurable speed and amount
-		card.rotation.x = Math.sin(float * config.wobbleSpeed);
-		card.rotation.x *= config.wobbleAmount;
-		card.rotation.y = Math.sin(float * config.wobbleSpeed);
-		card.rotation.y *= config.wobbleAmount;
+		card.rotation.x =
+			Math.cos(wobble * config.wobbleSpeed) * config.wobbleAmount;
+		card.rotation.y =
+			Math.sin(wobble * config.wobbleSpeed) * config.wobbleAmount;
 	});
 
 	// useTask("rotateAnimation", (delta) => {
