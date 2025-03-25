@@ -48,9 +48,17 @@
 		// console.log("card.position.y", card.position.y);
 	});
 
-	useTask("rotateAnimation", (delta) => {
-		card.rotation.y += delta * 0.3;
+	useTask("wobbleAnimation", (delta) => {
+		// Wobble effect with configurable speed and amount
+		card.rotation.x = Math.sin(float * config.wobbleSpeed);
+		card.rotation.x *= config.wobbleAmount;
+		card.rotation.y = Math.sin(float * config.wobbleSpeed);
+		card.rotation.y *= config.wobbleAmount;
 	});
+
+	// useTask("rotateAnimation", (delta) => {
+	// 	card.rotation.y += delta * 0.3;
+	// });
 
 	// const idleTask = useTask("idle", (delta) => {
 	// 	// wobble-effect
