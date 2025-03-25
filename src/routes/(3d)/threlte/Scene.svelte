@@ -7,7 +7,7 @@
 		RoundedBoxGeometry,
 		useTexture,
 	} from "@threlte/extras";
-	import type { Mesh } from "three";
+	import type { Mesh, PointLight } from "three";
 	import { Pane } from "tweakpane";
 
 	interactivity();
@@ -101,7 +101,10 @@
 </T.PerspectiveCamera>
 
 <T.AmbientLight intensity={0.5} />
-<T.DirectionalLight position={[0, 10, 10]} />
+<T.DirectionalLight position={[1, 2, 4]} intensity={1.2} />
+<T.DirectionalLight position={[-5, 0, 2]} intensity={0.7} color={0xfafafa} />
+<T.DirectionalLight position={[0, 2, -5]} intensity={0.8} />
+<T.PointLight position={[2, 1, 3]} distance={10} />
 
 <T.Mesh bind:ref={card} scale={1.5}>
 	<RoundedBoxGeometry args={[2.5, 3.5, 0.08]} creaseAngle={0.8} />
@@ -110,6 +113,15 @@
 	{#await useTexture(imageTextureUrl)}
 		<T.MeshStandardMaterial color="black" />
 	{:then texture}
-		<T.MeshStandardMaterial map={texture} />
+		<T.MeshPhysicalMaterial
+			map={texture}
+			metalness={0.1}
+			roughness={1 - config.glossiness}
+			clearcoat={0.8}
+			clearcoatRoughness={0.2}
+			reflectivity={config.reflectivity * 0.9}
+			envMapIntensity={config.envMapIntensity * 0.8}
+			ior={1.4}
+		/>
 	{/await}
 </T.Mesh>
