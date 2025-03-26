@@ -1,21 +1,15 @@
 <script lang="ts">
 	import { dev } from "$app/environment";
 	import { T, useTask } from "@threlte/core";
-	import {
-		interactivity,
-		OrbitControls,
-		RoundedBoxGeometry,
-		useTexture,
-	} from "@threlte/extras";
-	import type { Mesh, PointLight } from "three";
+	import { interactivity, OrbitControls, useTexture } from "@threlte/extras";
+	import type { Mesh } from "three";
 	import { Pane } from "tweakpane";
 
 	interactivity();
 
 	// const imageTextureUrl =
-	// 	"https://placehold.co/800?text=placeholder\\nimage&font=roboto";
-	const imageTextureUrl =
-		"https://placehold.co/500x700?text=placeholder\\nimage&font=roboto";
+	// 	"https://placehold.co/500x700?text=placeholder\\nimage&font=roboto";
+	const imageTextureUrl = "/textures/500x700.png";
 
 	const config = {
 		cardWidth: 2.5,
@@ -103,14 +97,14 @@
 </T.PerspectiveCamera>
 
 <T.AmbientLight intensity={0.5} />
-<T.DirectionalLight position={[1, 2, 4]} intensity={1.2} />
-<T.DirectionalLight position={[-5, 0, 2]} intensity={0.7} color={0xfafafa} />
+<T.DirectionalLight position={[1, 2, 6]} intensity={1.2} />
+<T.DirectionalLight position={[-3, 0, 8]} intensity={0.7} color={0xfafafa} />
 <T.DirectionalLight position={[0, 2, -5]} intensity={0.8} />
-<T.PointLight position={[2, 1, 3]} distance={10} />
+<T.PointLight position={[2, 1, 6]} distance={10} />
 
-<T.Mesh bind:ref={card} scale={1.5}>
-	<RoundedBoxGeometry args={[2.5, 3.5, 0.08]} />
-	<!-- <T.BoxGeometry args={[2.5, 3.5, 0.08]} /> -->
+<T.Mesh bind:ref={card} scale={1}>
+	<!-- <RoundedBoxGeometry args={[2.5, 3.5, 0.08]} /> -->
+	<T.BoxGeometry args={[5, 7, 0.08]} />
 
 	{#await useTexture(imageTextureUrl)}
 		<T.MeshStandardMaterial color="black" />
