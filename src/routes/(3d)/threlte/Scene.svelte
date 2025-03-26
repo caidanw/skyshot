@@ -71,6 +71,7 @@
 	// });
 
 	$effect(() => {
+		return;
 		if (!dev) return;
 
 		const mainElem = document.querySelector("main");
