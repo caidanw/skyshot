@@ -35,8 +35,7 @@
 
 	// const scale = new Spring(2);
 
-	// svelte-ignore non_reactive_update
-	let card: Mesh;
+	let card: Mesh = $state()!;
 
 	let float = 0;
 	useTask("floatAnimation", (delta) => {
