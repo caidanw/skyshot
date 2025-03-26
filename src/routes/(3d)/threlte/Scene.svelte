@@ -12,8 +12,10 @@
 
 	interactivity();
 
+	// const imageTextureUrl =
+	// 	"https://placehold.co/800?text=placeholder\\nimage&font=roboto";
 	const imageTextureUrl =
-		"https://placehold.co/800?text=placeholder\\nimage&font=roboto";
+		"https://placehold.co/500x700?text=placeholder\\nimage&font=roboto";
 
 	const config = {
 		cardWidth: 2.5,
@@ -106,7 +108,7 @@
 <T.PointLight position={[2, 1, 3]} distance={10} />
 
 <T.Mesh bind:ref={card} scale={1.5}>
-	<RoundedBoxGeometry args={[2.5, 3.5, 0.08]} creaseAngle={0.8} />
+	<RoundedBoxGeometry args={[2.5, 3.5, 0.08]} />
 	<!-- <T.BoxGeometry args={[2.5, 3.5, 0.08]} /> -->
 
 	{#await useTexture(imageTextureUrl)}
