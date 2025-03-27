@@ -1,15 +1,23 @@
 <script lang="ts">
+	import { dev } from "$app/environment";
 	import { Canvas } from "@threlte/core";
-	import { Studio } from "@threlte/studio";
 	import Scene from "./Scene.svelte";
+
+	const enableStudio = false;
 </script>
 
 <main class="relative flex-1">
 	<div class="absolute inset-0">
 		<Canvas>
-			<Studio>
+			{#if dev && enableStudio}
+				{#await import("@threlte/studio") then { Studio }}
+					<Studio>
+						<Scene />
+					</Studio>
+				{/await}
+			{:else}
 				<Scene />
-			</Studio>
+			{/if}
 		</Canvas>
 	</div>
 </main>
