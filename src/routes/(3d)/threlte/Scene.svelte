@@ -63,7 +63,7 @@
 	// });
 </script>
 
-<T.PerspectiveCamera makeDefault position={[0, 0, 10]}>
+<T.PerspectiveCamera makeDefault position={[0, 0, 10.5]}>
 	<OrbitControls enableDamping enablePan={false} rotateSpeed={2} />
 	<!-- <TrackballControls rotateSpeed={3} /> -->
 </T.PerspectiveCamera>
