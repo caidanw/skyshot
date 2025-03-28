@@ -6,18 +6,22 @@
 	const enableStudio = false;
 </script>
 
-<main class="relative flex-1">
-	<div class="absolute inset-0">
-		<Canvas>
-			{#if dev && enableStudio}
+<main class="relative flex-1 container">
+	{#if dev && enableStudio}
+		<div class="absolute inset-0">
+			<Canvas>
 				{#await import("@threlte/studio") then { Studio }}
 					<Studio>
 						<Scene />
 					</Studio>
 				{/await}
-			{:else}
+			</Canvas>
+		</div>
+	{:else}
+		<div class="aspect-[6/7] max-h-[70vh] mx-auto">
+			<Canvas>
 				<Scene />
-			{/if}
-		</Canvas>
-	</div>
+			</Canvas>
+		</div>
+	{/if}
 </main>
