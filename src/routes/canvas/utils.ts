@@ -31,5 +31,4 @@ export function drawBorder(
     ctx.canvas.width - width - offset * 2,
     ctx.canvas.height - width - offset * 2,
   );
-  ctx.stroke();
 }
