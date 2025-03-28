@@ -14,13 +14,19 @@
 		color: "#f00",
 	});
 
-	$effect(() => {
+	const img = new Image();
+	img.src = "https://placehold.co/500x700";
+	img.onload = render;
+
+	function render() {
 		const ctx = canvas.getContext("2d");
 		if (!ctx) {
 			throw new Error("Failed to get 2D context from canvas");
 		}
 
 		ctx.clearRect(0, 0, width, height);
+
+		ctx.drawImage(img, 0, 0, width, height);
 
 		// Draw border
 		drawBorder(
@@ -29,7 +35,8 @@
 			borderStyle.offset,
 			borderStyle.color,
 		);
-	});
+	}
+	$effect(render);
 
 	onMount(() => {
 		const tweakpaneElem = document.getElementById("tweakpane");
