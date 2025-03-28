@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { T, useTask } from "@threlte/core";
 	import { interactivity, OrbitControls } from "@threlte/extras";
-	import type { Mesh } from "three";
-	import { createCardCanvasContext, drawBorder } from "../../canvas/utils";
 	import { onMount } from "svelte";
+	import type { Mesh } from "three";
 	import { Pane } from "tweakpane";
+	import { createCardContextTexture, drawBorder } from "../../canvas/utils";
 
 	interactivity();
 
@@ -65,7 +65,7 @@
 	// 	// bounce effect
 	// });
 
-	const { ctx, texture } = createCardCanvasContext();
+	const { ctx, texture } = createCardContextTexture();
 
 	const borderStyle = $state({
 		width: 10,
