@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { Pane } from "tweakpane";
+	import { drawBorder } from "./utils";
 
 	let canvas: HTMLCanvasElement;
 
@@ -8,30 +9,10 @@
 	const height = 700;
 
 	const borderStyle = $state({
-		borderWidth: 1,
-		borderOffset: 0,
-		borderColor: "#f00",
+		width: 1,
+		offset: 0,
+		color: "#f00",
 	});
-
-	function drawBorder(
-		ctx: CanvasRenderingContext2D,
-		borderWidth: number = 1,
-		borderOffset: number = 0,
-		borderColor: string = "red",
-	) {
-		if (borderWidth <= 0) return;
-		if (borderOffset < 0) borderOffset = 0;
-
-		ctx.strokeStyle = borderColor;
-		ctx.lineWidth = borderWidth;
-		ctx.strokeRect(
-			borderWidth / 2 + borderOffset,
-			borderWidth / 2 + borderOffset,
-			width - borderWidth - borderOffset * 2,
-			height - borderWidth - borderOffset * 2,
-		);
-		ctx.stroke();
-	}
 
 	$effect(() => {
 		const ctx = canvas.getContext("2d");
@@ -44,9 +25,9 @@
 		// Draw border
 		drawBorder(
 			ctx,
-			borderStyle.borderWidth,
-			borderStyle.borderOffset,
-			borderStyle.borderColor,
+			borderStyle.width,
+			borderStyle.offset,
+			borderStyle.color,
 		);
 	});
 
@@ -61,17 +42,21 @@
 			container: tweakpaneElem,
 			title: "Card Style",
 		});
-		pane.addBinding(borderStyle, "borderWidth", {
+
+		const borderFolder = pane.addFolder({
+			title: "Border",
+		});
+		borderFolder.addBinding(borderStyle, "width", {
 			min: 0,
 			max: 50,
 			step: 1,
 		});
-		pane.addBinding(borderStyle, "borderOffset", {
+		borderFolder.addBinding(borderStyle, "offset", {
 			min: 0,
 			max: 50,
 			step: 1,
 		});
-		pane.addBinding(borderStyle, "borderColor");
+		borderFolder.addBinding(borderStyle, "color");
 
 		return () => {
 			pane.dispose();
