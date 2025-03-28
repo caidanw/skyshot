@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { dev } from "$app/environment";
 	import { T, useTask } from "@threlte/core";
 	import { interactivity, OrbitControls, useTexture } from "@threlte/extras";
 	import type { Mesh } from "three";
-	import { Pane } from "tweakpane";
 
 	interactivity();
 
@@ -63,32 +61,6 @@
 	// 	// wobble-effect
 	// 	// bounce effect
 	// });
-
-	$effect(() => {
-		return;
-		if (!dev) return;
-
-		const mainElem = document.querySelector("main");
-		if (!mainElem) {
-			console.error("target element for tweakpane not found");
-			return;
-		}
-
-		const elem = mainElem.appendChild(document.createElement("div"));
-		elem.style.position = "absolute";
-		elem.style.right = "0";
-
-		const pane = new Pane({
-			container: elem,
-			title: "Scene Config",
-		});
-		// pane.addBinding(card, "position");
-
-		return () => {
-			mainElem.removeChild(elem);
-			pane.dispose();
-		};
-	});
 </script>
 
 <T.PerspectiveCamera makeDefault position={[0, 0, 10]}>
