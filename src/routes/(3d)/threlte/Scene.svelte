@@ -68,6 +68,7 @@
 	const { ctx, texture } = createCardContextTexture();
 
 	const borderStyle = $state({
+		enabled: true,
 		width: 10,
 		offset: 0,
 		color: "#f00",
@@ -84,12 +85,14 @@
 		ctx.drawImage(img, 0, 0, ctx.canvas.width, ctx.canvas.height);
 
 		// Draw border
-		drawBorder(
-			ctx,
-			borderStyle.width,
-			borderStyle.offset,
-			borderStyle.color,
-		);
+		if (borderStyle.enabled) {
+			drawBorder(
+				ctx,
+				borderStyle.width,
+				borderStyle.offset,
+				borderStyle.color,
+			);
+		}
 		texture.needsUpdate = true;
 	}
 	$effect(render);
@@ -109,6 +112,7 @@
 		const borderFolder = pane.addFolder({
 			title: "Border",
 		});
+		borderFolder.addBinding(borderStyle, "enabled");
 		borderFolder.addBinding(borderStyle, "width", {
 			min: 0,
 			max: 50,
