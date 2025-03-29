@@ -7,7 +7,7 @@
 </script>
 
 {#if dev && enableStudio}
-	<main class="relative flex-1 container">
+	<main class="relative flex-1">
 		<div class="absolute inset-0">
 			<Canvas>
 				{#await import("@threlte/studio") then { Studio }}
