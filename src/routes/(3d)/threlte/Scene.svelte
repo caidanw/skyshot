@@ -8,10 +8,6 @@
 
 	interactivity();
 
-	// const imageTextureUrl =
-	// 	"https://placehold.co/500x700?text=placeholder\\nimage&font=roboto";
-	const imageTextureUrl = "/textures/500x700.png";
-
 	const config = {
 		cardWidth: 2.5,
 		cardHeight: 3.5,
@@ -56,17 +52,6 @@
 			Math.sin(wobble * config.wobbleSpeed) * config.wobbleAmount;
 	});
 
-	// useTask("rotateAnimation", (delta) => {
-	// 	card.rotation.y += delta * 0.3;
-	// });
-
-	// const idleTask = useTask("idle", (delta) => {
-	// 	// wobble-effect
-	// 	// bounce effect
-	// });
-
-	const { ctx, texture } = createCardContextTexture();
-
 	const borderStyle = $state({
 		enabled: true,
 		width: 10,
@@ -74,10 +59,14 @@
 		color: "#f00",
 	});
 
+	const placeholderTextureUrl = "/textures/500x700.png";
+
 	const img = new Image();
-	img.src = "https://placehold.co/500x700";
+	img.src = placeholderTextureUrl;
 	img.crossOrigin = "anonymous";
 	img.onload = render;
+
+	const { ctx, texture: cardTexture } = createCardContextTexture();
 
 	function render() {
 		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -93,7 +82,7 @@
 				borderStyle.color,
 			);
 		}
-		texture.needsUpdate = true;
+		cardTexture.needsUpdate = true;
 	}
 	$effect(render);
 
@@ -138,7 +127,7 @@
 
 <T.AmbientLight intensity={0.5} />
 <T.DirectionalLight position={[1, 2, 6]} intensity={1.2} />
-<T.DirectionalLight position={[-3, 0, 8]} intensity={0.7} color={0xfafafa} />
+<T.DirectionalLight position={[-3, 0, 8]} intensity={0.7} />
 <T.DirectionalLight position={[0, 2, -5]} intensity={0.8} />
 <T.PointLight position={[2, 1, 6]} distance={10} />
 
@@ -146,9 +135,8 @@
 	<!-- <RoundedBoxGeometry args={[2.5, 3.5, 0.08]} /> -->
 	<T.BoxGeometry args={[5, 7, 0.08]} />
 
-	<!-- <T.MeshStandardMaterial map={texture} /> -->
 	<T.MeshPhysicalMaterial
-		map={texture}
+		map={cardTexture}
 		metalness={0.1}
 		roughness={1 - config.glossiness}
 		clearcoat={0.8}
@@ -158,11 +146,13 @@
 		ior={1.4}
 	/>
 
-	<!-- {#await useTexture(imageTextureUrl)} -->
+	<!-- Use a normap map texture for the card surface material -->
+	<!-- {#await useTexture("/textures/white-plain-paper/white-plain-paper_normal-ogl.png")} -->
 	<!-- 	<T.MeshStandardMaterial color="black" /> -->
-	<!-- {:then texture} -->
+	<!-- {:then normalMapTexture} -->
 	<!-- 	<T.MeshPhysicalMaterial -->
-	<!-- 		map={texture} -->
+	<!-- 		map={cardTexture} -->
+	<!-- 		normalMap={normalMapTexture} -->
 	<!-- 		metalness={0.1} -->
 	<!-- 		roughness={1 - config.glossiness} -->
 	<!-- 		clearcoat={0.8} -->
