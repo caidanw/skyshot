@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { T, useTask } from "@threlte/core";
 	import { interactivity, OrbitControls } from "@threlte/extras";
-	import { onMount } from "svelte";
-	import type { Mesh } from "three";
-	import { Pane } from "tweakpane";
-	import { createCardContextTexture, drawBorder } from "../../canvas/utils";
+	import type { Mesh, Texture } from "three";
+
+	const { cardTexture }: { cardTexture?: Texture } = $props();
 
 	interactivity();
 
@@ -50,73 +49,6 @@
 			Math.cos(wobble * config.wobbleSpeed) * config.wobbleAmount;
 		card.rotation.y =
 			Math.sin(wobble * config.wobbleSpeed) * config.wobbleAmount;
-	});
-
-	const borderStyle = $state({
-		enabled: true,
-		width: 10,
-		offset: 0,
-		color: "#f00",
-	});
-
-	const placeholderTextureUrl = "/textures/500x700.png";
-
-	const img = new Image();
-	img.src = placeholderTextureUrl;
-	img.crossOrigin = "anonymous";
-	img.onload = render;
-
-	const { ctx, texture: cardTexture } = createCardContextTexture();
-
-	function render() {
-		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-		ctx.drawImage(img, 0, 0, ctx.canvas.width, ctx.canvas.height);
-
-		// Draw border
-		if (borderStyle.enabled) {
-			drawBorder(
-				ctx,
-				borderStyle.width,
-				borderStyle.offset,
-				borderStyle.color,
-			);
-		}
-		cardTexture.needsUpdate = true;
-	}
-	$effect(render);
-
-	onMount(() => {
-		const tweakpaneElem = document.getElementById("tweakpane");
-		if (!tweakpaneElem) {
-			console.error("target element for tweakpane not found");
-			return;
-		}
-
-		const pane = new Pane({
-			container: tweakpaneElem,
-			title: "Card Style",
-		});
-
-		const borderFolder = pane.addFolder({
-			title: "Border",
-		});
-		borderFolder.addBinding(borderStyle, "enabled");
-		borderFolder.addBinding(borderStyle, "width", {
-			min: 0,
-			max: 50,
-			step: 1,
-		});
-		borderFolder.addBinding(borderStyle, "offset", {
-			min: 0,
-			max: 50,
-			step: 1,
-		});
-		borderFolder.addBinding(borderStyle, "color");
-
-		return () => {
-			pane.dispose();
-		};
 	});
 </script>
 
