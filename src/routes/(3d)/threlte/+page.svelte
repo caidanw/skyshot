@@ -2,7 +2,11 @@
 	import { Canvas } from "@threlte/core";
 	import type { Action } from "svelte/action";
 	import { Pane } from "tweakpane";
-	import { createCardContextTexture, drawBorder } from "../../canvas/utils";
+	import {
+		createCardContextTexture,
+		drawBorder,
+		drawFadingGradient,
+	} from "../../canvas/utils";
 	import Scene from "./Scene.svelte";
 
 	const settings = $state({
@@ -42,6 +46,8 @@
 
 		ctx.drawImage(img, 0, 0, ctx.canvas.width, ctx.canvas.height);
 
+		drawFadingGradient(ctx, 0, 0, ctx.canvas.width, 700);
+
 		// Draw border
 		if (borderStyle.enabled) {
 			drawBorder(
@@ -51,6 +57,7 @@
 				borderStyle.color,
 			);
 		}
+
 		cardTexture.needsUpdate = true;
 	}
 	$effect(render);

@@ -32,3 +32,22 @@ export function drawBorder(
     ctx.canvas.height - width - offset * 2,
   );
 }
+
+export function drawFadingGradient(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  direction: "up" | "down" = "up",
+) {
+  const computeAlpha = (i: number) => {
+    const alpha = direction === "up" ? i / height : 1 - i / height;
+    return Math.max(0, Math.min(1, alpha)).toFixed(5);
+  };
+
+  for (let i = 0; i < height; i++) {
+    ctx.fillStyle = `rgba(0, 0, 0, ${computeAlpha(i)})`;
+    ctx.fillRect(x, y + i, width, 1);
+  }
+}
